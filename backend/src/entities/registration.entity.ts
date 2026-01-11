@@ -28,13 +28,16 @@ export class Registration {
   @JoinColumn({ name: 'attendeeId' })
   attendee: Attendee;
 
+  // 🎟 Unique ticket reference (UUID)
   @Column({ unique: true })
   ticketCode: string;
 
-  @Column({ type: 'longtext' }) // 🔥 IMPORTANT FIX
+  // 📱 QR code data (base64 or string)
+  @Column({ type: 'text' })
   qrCode: string;
 
-  @Column({ default: 'pending' })
+  // 🚦 Ticket status
+  @Column({ default: 'VALID' })
   status: string;
 
   @CreateDateColumn()

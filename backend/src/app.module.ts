@@ -21,11 +21,7 @@ import { RegistrationsService } from 'src/registrations/registrations.service';
 @Module({
   imports: [
     TypeOrmModule.forRoot({
-      type: 'mariadb',
-      host: 'localhost',
-      port: 3306,
-      username: 'root',
-      password: '',
+      type: 'sqlite',
       database: 'eventdb',
       entities: [Event, Attendee, Registration],
       synchronize: true,

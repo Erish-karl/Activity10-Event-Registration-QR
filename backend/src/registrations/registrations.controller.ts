@@ -1,4 +1,5 @@
-import { Controller, Get, Post, Param, Body, Patch } from '@nestjs/common';
+// registrations.controller.ts
+import { Controller, Get, Param, Put, Post, Body } from '@nestjs/common';
 import { RegistrationsService } from './registrations.service';
 import { Registration } from '../entities/registration.entity';
 
@@ -6,23 +7,18 @@ import { Registration } from '../entities/registration.entity';
 export class RegistrationsController {
   constructor(private readonly registrationsService: RegistrationsService) {}
 
-  @Post()
-  create(@Body() registration: Partial<Registration>): Promise<Registration> {
-    return this.registrationsService.create(registration);
-  }
-
-  @Get(':eventId')
-  findAllByEvent(@Param('eventId') eventId: string): Promise<Registration[]> {
+  @Get('event/:eventId')
+  getEventRegistrations(@Param('eventId') eventId: string): Promise<Registration[]> {
     return this.registrationsService.findAllByEvent(eventId);
   }
 
-  @Patch(':id/checkin')
+  @Put(':id/check-in')
   checkIn(@Param('id') id: string): Promise<Registration> {
     return this.registrationsService.checkIn(id);
   }
-  @Get()
-findAll(): Promise<Registration[]> {
-  return this.registrationsService.findAll(); // ✅ call the service
-}
 
+  @Post()
+  create(@Body() body: { eventId: string; attendeeId: string }): Promise<Registration> {
+    return this.registrationsService.create(body);
+  }
 }
